@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data — raw OPL CSV is not committed (large + public-domain redownload)
+data/raw/
+
+# Filtered cohort is 351 MB — over GitHub's 100 MB limit. Regenerate via
+# `python notebooks/02_cohort.py`. peaks_wide.csv (~46 MB) stays tracked.
+data/processed/cohort_filtered.csv
+

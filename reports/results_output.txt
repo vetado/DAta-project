@@ -1,0 +1,42 @@
+
+========================================================================
+  Block 1: Load wide peak table
+========================================================================
+Loaded peaks: 441,984 lifters
+Sex breakdown: {'M': np.int64(309232), 'F': np.int64(132678), 'Mx': np.int64(74)}
+
+========================================================================
+  Block 2: H1 - Friedman test (peak age differs across the 3 lifts?)
+========================================================================
+  N (lifters):  441,984
+  Statistic:    4866.68
+  p-value:      0.000e+00
+  Reject H0 (alpha=0.05)?  YES
+
+========================================================================
+  Block 3: H1 post-hoc - pairwise Wilcoxon signed-rank, Bonferroni-corrected
+========================================================================
+  Squat - Bench       median diff = +0.00 yr   p_raw = 7.295e-05   p_bonf = 2.188e-04   ***
+  Squat - Deadlift    median diff = +0.00 yr   p_raw = 0.000e+00   p_bonf = 0.000e+00   ***
+  Bench - Deadlift    median diff = +0.00 yr   p_raw = 0.000e+00   p_bonf = 0.000e+00   ***
+
+========================================================================
+  Block 4: H2 - Mann-Whitney U: M vs F peak age, per lift (Bonferroni-corrected)
+========================================================================
+  Squat       n_M=309,232  n_F=132,678   med M=23.5   med F=26.0   diff (M-F)=-2.50   p_raw=0.000e+00   p_bonf=0.000e+00   ***
+  Bench       n_M=309,232  n_F=132,678   med M=23.5   med F=26.0   diff (M-F)=-2.50   p_raw=0.000e+00   p_bonf=0.000e+00   ***
+  Deadlift    n_M=309,232  n_F=132,678   med M=23.5   med F=26.0   diff (M-F)=-2.50   p_raw=0.000e+00   p_bonf=0.000e+00   ***
+
+========================================================================
+  Block 5: Save plots
+========================================================================
+Saved reports/figures/peak_age_by_lift.png
+Saved reports/figures/peak_age_by_lift_and_sex.png
+
+========================================================================
+  Block 6: Save additional EDA charts
+========================================================================
+Loaded cohort for EDA: 1,487,361 meet-rows
+Saved reports/figures/age_distribution.png
+Saved reports/figures/sex_breakdown.png
+Saved reports/figures/meets_per_lifter.png

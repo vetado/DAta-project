@@ -1,0 +1,123 @@
+
+========================================================================
+  Section 1: Problem
+========================================================================
+H1: peak age differs across squat, bench, deadlift
+    Predicted direction: deadlift latest, bench earliest.
+H2: within each lift, peak age differs between M and F lifters.
+
+========================================================================
+  Section 2: Data source
+========================================================================
+Primary:        OpenPowerlifting bulk CSV (2026-05-16 snapshot).
+Raw rows:       3,925,887 meet-performances x 42 columns.
+Supplementary:  Wikipedia (API + scraping, see notebooks 01 & 02).
+
+========================================================================
+  Section 3: Methodology
+========================================================================
+Cohort filters (in order):
+  1. Event == SBD
+  2. Equipment != Straps
+  3. Place != DQ
+  4. Age in [14, 80]
+  5. All three best-lift columns > 0
+  6. BodyweightKg > 0
+
+Outcome:        relative_strength = lift / BodyweightKg
+Peak extraction: per (Name, Sex), per lift, age at max relative strength
+H1 test:        Friedman + pairwise Wilcoxon (Bonferroni)
+H2 test:        Mann-Whitney U per lift (Bonferroni, Mx excluded)
+
+========================================================================
+  Section 4: Load peak table
+========================================================================
+Loaded peaks_wide.csv: 441,984 lifters
+Sex breakdown: {'M': np.int64(309232), 'F': np.int64(132678), 'Mx': np.int64(74)}
+
+========================================================================
+  Section 5: H1 - peak age differs across squat, bench, deadlift?
+========================================================================
+Friedman: chi2 = 4867, p = 0.000e+00, N = 441,984
+
+Pairwise Wilcoxon (Bonferroni-corrected):
+  Squat - Bench       median diff = +0.00 yr   p_bonf = 2.188e-04   ***
+  Squat - Deadlift    median diff = +0.00 yr   p_bonf = 0.000e+00   ***
+  Bench - Deadlift    median diff = +0.00 yr   p_bonf = 0.000e+00   ***
+
+Headline:  H1 technically rejected, but the median pairwise
+           differences are <= 0.5 yr and the direction is
+           OPPOSITE the prediction (deadlift earliest, not latest).
+           In practice: peak age is the same across all three lifts.
+Figure:    reports/figures/peak_age_by_lift.png
+
+========================================================================
+  Section 6: H2 - within each lift, peak age differs M vs F?
+========================================================================
+Per lift, Mann-Whitney U (Bonferroni-corrected):
+  Squat       med M = 23.5   med F = 26.0   diff (M-F) = -2.50 yr   p_bonf = 0.000e+00   ***
+  Bench       med M = 23.5   med F = 26.0   diff (M-F) = -2.50 yr   p_bonf = 0.000e+00   ***
+  Deadlift    med M = 23.5   med F = 26.0   diff (M-F) = -2.50 yr   p_bonf = 0.000e+00   ***
+
+Headline:  Women peak 2.5 years LATER than men in all three lifts.
+           The effect is identical across lifts (rules out a
+           lift-specific physiological story). Cause may be
+           physiology OR sampling era (women's powerlifting expanded
+           in the 2010s-2020s; women in OPL are on average newer to
+           the sport). This study cannot distinguish them.
+Figure:    reports/figures/peak_age_by_lift_and_sex.png
+
+========================================================================
+  Section 7: Supporting EDA charts
+========================================================================
+reports/figures/age_distribution.png
+  Stacked histogram of cohort Age by Sex (M, F, Mx). Shows the
+  age distribution that survived the filter; implicitly motivates
+  the 43.6% Age-filter attrition caveat.
+
+reports/figures/sex_breakdown.png
+  Bar chart of unique lifters by Sex in the peak table. Quantifies
+  the M/F imbalance that the H2 sampling caveat refers to.
+
+reports/figures/meets_per_lifter.png
+  Log-y histogram of meets per lifter in the cohort. Most lifters
+  appear in only one meet; for them, all three peak ages collapse
+  to the same value, which is the mechanism behind the 'practical
+  null' H1 finding.
+
+========================================================================
+  Section 8: Limitations
+========================================================================
+1. Single-meet lifters dominate the marginals: most lifters have
+   only one cohort meet, so their three peak ages collapse to a
+   single value. This is why H1's median differences come out at
+   <= 0.5 yr (a 'practical null') despite Friedman's p approx 0.
+
+2. Sex effect could be sampling era, not physiology: women's
+   competitive powerlifting expanded mainly in the 2010s-2020s.
+   Women in OPL are on average newer to the sport, so 'peak in
+   observed data' is biased toward later ages.
+
+3. Age missingness is large (37% in raw, 43.6% effective). OPL
+   records lifts more reliably than ages. We have no way to test
+   whether unrecorded-age lifters peak differently.
+
+4. Dedup tie-breaking is by input order (first meet wins among
+   ties for max relative strength). Alternative rules would give
+   slightly different per-lifter peak ages but no material change.
+
+5. Equipment is not adjusted for in the H2 test. If M and F use
+   different equipment distributions, part of the M-F difference
+   could be an Equipment difference. The natural follow-up is per-
+   lift OLS regression peak_age ~ Sex + Equipment.
+
+========================================================================
+  Section 9: Conclusion
+========================================================================
+In OpenPowerlifting's competitive data, peak relative-strength age
+does not meaningfully differ across the squat, bench, and deadlift
+(the three medians sit within 0.5 yr of each other), but it differs
+substantively between sexes: women peak about 2.5 years later than
+men, identically across all three lifts. The sex effect is the
+project's headline finding; whether it reflects physiology or OPL's
+sampling era is an open question this analysis cannot resolve.

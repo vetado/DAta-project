@@ -1,0 +1,90 @@
+
+========================================================================
+  Block 1: Imports & paths
+========================================================================
+requests: 2.34.2
+pandas:   3.0.3
+Raw dir:       data/raw
+Processed dir: data/processed
+
+========================================================================
+  Block 2: Helper: robust GET with retries
+========================================================================
+Helper ready.
+
+========================================================================
+  Block 3: Step A - walk categories with pagination
+========================================================================
+  [American powerlifters] page 1: +90 → total 90
+  [British powerlifters] page 1: +20 → total 20
+  [Russian powerlifters] page 1: +13 → total 13
+  [Female powerlifters] page 1: +96 → total 96
+  [Ukrainian powerlifters] page 1: +8 → total 8
+
+Total raw members across categories: 227
+After dedup by title:                224
+Sampling 200 for summary fetch (rubric minimum: 200).
+
+========================================================================
+  Block 4: Step B - fetch REST summary per lifter
+========================================================================
+  fetched  25/200  (errors so far: 0)
+  fetched  50/200  (errors so far: 0)
+  fetched  75/200  (errors so far: 0)
+  fetched 100/200  (errors so far: 0)
+  fetched 125/200  (errors so far: 0)
+  fetched 150/200  (errors so far: 0)
+  fetched 175/200  (errors so far: 0)
+  fetched 200/200  (errors so far: 0)
+
+Summaries collected: 200
+Errors:              0
+
+========================================================================
+  Block 5: Save raw JSON dump
+========================================================================
+Wrote data/raw/wiki_powerlifter_summaries.json (433.9 KB)
+
+========================================================================
+  Block 6: Parse into DataFrame
+========================================================================
+DataFrame shape: 200 rows × 6 columns
+
+Head:
+                          title                                                description                                                                                                                                                                                                                                                                                                                                                                                                           extract lang                                                    page_url        source_category
+0               Ahmed Abukhater                             Palestinian American architect                                                                                              Ahmed Abukhater is an architect, environmental scientist, and an urban and regional planner by trade. He is an author, powerlifter, and the first athlete to represent Palestine at the World Association of Bench Pressers and Dead lifters (WABDL) World Powerlifting Championships in Las Vegas, Nevada, in 2006.   en               https://en.wikipedia.org/wiki/Ahmed_Abukhater  American powerlifters
+1                    Alan Aerts     World powerlifting and benchpress champion (born 1956)  Alan Aerts was a world powerlifting and benchpress champion. Born May 6, 1956, he died unexpectedly on August 23, 2023. Aerts had polycythemia, a fatal blood disease; however, this was not his cause of death. He was also the former owner and operator of the largest vending machine business in the San Jose, California area, Custom Vending Systems. Aerts served on the city council of Monte Sereno, C   en                    https://en.wikipedia.org/wiki/Alan_Aerts  American powerlifters
+2  Paul Anderson (weightlifter)                          American weightlifter (1932–1994)                                                                                                                                                                                 Paul Edward Anderson was an American weightlifter, professional wrestler, powerlifter and strongman. During the 1950s, he was an Olympic gold medalist, a world champion, and a two-time national Olympic weightlifting champion.   en  https://en.wikipedia.org/wiki/Paul_Anderson_(weightlifter)  American powerlifters
+3                    Ted Arcidi  American professional wrestler, model, actor, powerlifter                                                                                                                                                                                       Theodore (Ted) Arcidi is an American former professional wrestler, actor, and powerlifter. He is known to be the first man in history to bench press over 700 pounds in competition, establishing an official world record.   en                    https://en.wikipedia.org/wiki/Ted_Arcidi  American powerlifters
+4                 Taylor Atwood                                       American powerlifter                                                                                                                                                                                                                                                                  Taylor Atwood is an American powerlifter. He is a 3-time IPF World Champion and has held multiple world records in the 74 kilogram weight class.   en                 https://en.wikipedia.org/wiki/Taylor_Atwood  American powerlifters
+
+Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 200 entries, 0 to 199
+Data columns (total 6 columns):
+ #   Column           Non-Null Count  Dtype
+---  ------           --------------  -----
+ 0   title            200 non-null    str  
+ 1   description      193 non-null    str  
+ 2   extract          200 non-null    str  
+ 3   lang             200 non-null    str  
+ 4   page_url         200 non-null    str  
+ 5   source_category  200 non-null    str  
+dtypes: str(6)
+memory usage: 9.5 KB
+
+========================================================================
+  Block 7: Save processed CSV
+========================================================================
+Wrote data/processed/wiki_notable_lifters.csv: 200 rows
+
+========================================================================
+  Block 8: Run summary
+========================================================================
+Categories walked:     5
+Raw category members:  227
+After dedup:           224
+Summaries fetched:     200
+Errors:                0
+Saved raw to:          data/raw/wiki_powerlifter_summaries.json
+Saved processed to:    data/processed/wiki_notable_lifters.csv

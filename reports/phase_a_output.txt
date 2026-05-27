@@ -1,0 +1,223 @@
+
+========================================================================
+  Block 1: Imports — already done at top of file
+========================================================================
+pandas: 3.0.3
+numpy:  2.4.6
+
+========================================================================
+  Block 2: Locate and load the OPL CSV
+========================================================================
+Loaded openpowerlifting-2026-05-16/openpowerlifting-2026-05-16-d230fa1a.csv
+Shape: 3,925,887 rows × 42 columns
+
+========================================================================
+  Block 3: Schema check — columns and dtypes
+========================================================================
+Columns: ['Name', 'Sex', 'Event', 'Equipment', 'Age', 'AgeClass', 'BirthYearClass', 'Division', 'BodyweightKg', 'WeightClassKg', 'Squat1Kg', 'Squat2Kg', 'Squat3Kg', 'Squat4Kg', 'Best3SquatKg', 'Bench1Kg', 'Bench2Kg', 'Bench3Kg', 'Bench4Kg', 'Best3BenchKg', 'Deadlift1Kg', 'Deadlift2Kg', 'Deadlift3Kg', 'Deadlift4Kg', 'Best3DeadliftKg', 'TotalKg', 'Place', 'Dots', 'Wilks', 'Glossbrenner', 'Goodlift', 'Tested', 'Country', 'State', 'Federation', 'ParentFederation', 'Date', 'MeetCountry', 'MeetState', 'MeetTown', 'MeetName', 'Sanctioned']
+
+Dtypes:
+Name                    str
+Sex                     str
+Event                   str
+Equipment               str
+Age                 float64
+AgeClass                str
+BirthYearClass          str
+Division                str
+BodyweightKg        float64
+WeightClassKg           str
+Squat1Kg            float64
+Squat2Kg            float64
+Squat3Kg            float64
+Squat4Kg            float64
+Best3SquatKg        float64
+Bench1Kg            float64
+Bench2Kg            float64
+Bench3Kg            float64
+Bench4Kg            float64
+Best3BenchKg        float64
+Deadlift1Kg         float64
+Deadlift2Kg         float64
+Deadlift3Kg         float64
+Deadlift4Kg         float64
+Best3DeadliftKg     float64
+TotalKg             float64
+Place                   str
+Dots                float64
+Wilks               float64
+Glossbrenner        float64
+Goodlift            float64
+Tested                  str
+Country                 str
+State                   str
+Federation              str
+ParentFederation        str
+Date                    str
+MeetCountry             str
+MeetState               str
+MeetTown                str
+MeetName                str
+Sanctioned              str
+dtype: object
+
+========================================================================
+  Block 4: Missingness — top 20 most-missing columns (fraction NaN)
+========================================================================
+Squat4Kg            0.9975
+Bench4Kg            0.9939
+Deadlift4Kg         0.9930
+State               0.7870
+Squat3Kg            0.6891
+Squat2Kg            0.6814
+Squat1Kg            0.6781
+Deadlift3Kg         0.6586
+Deadlift2Kg         0.6459
+Deadlift1Kg         0.6398
+Bench3Kg            0.5514
+Bench2Kg            0.5379
+Bench1Kg            0.5326
+Country             0.4410
+ParentFederation    0.3985
+Age                 0.3696
+BirthYearClass      0.3482
+Best3SquatKg        0.3012
+MeetState           0.2843
+AgeClass            0.2755
+dtype: float64
+
+========================================================================
+  Block 5: Value counts — Event
+========================================================================
+Event
+SBD    2845628
+B       768563
+D       211838
+BD       73852
+S        19515
+SB        4157
+SD        2334
+Name: count, dtype: int64
+
+========================================================================
+  Block 6: Value counts — Sex
+========================================================================
+Sex
+M     2829220
+F     1096501
+Mx        166
+Name: count, dtype: int64
+
+========================================================================
+  Block 7: Value counts — Equipment
+========================================================================
+Equipment
+Raw           1847839
+Single-ply    1387558
+Unlimited      323512
+Wraps          236411
+Multi-ply      130448
+Straps            119
+Name: count, dtype: int64
+
+========================================================================
+  Block 8: Value counts — Place (top 20)
+========================================================================
+Place
+1     1615690
+2      609594
+3      370187
+4      250021
+DQ     242203
+5      180975
+6      135181
+7      103149
+8       80100
+9       62556
+10      48841
+11      37472
+12      28914
+13      22250
+NS      22152
+14      17518
+15      13999
+G       13321
+16      11217
+17       9033
+Name: count, dtype: int64
+
+========================================================================
+  Block 9: Lift sanity — <0 / ==0 / NaN / >0 per best-lift column
+========================================================================
+
+Best3SquatKg:
+  <  0 (failed attempts):       3,277  (0.1%)
+  == 0 (did not attempt):           0  (0.0%)
+  NaN  (not recorded):      1,182,499  (30.1%)
+  >  0 (valid best):        2,740,111  (69.8%)
+
+Best3BenchKg:
+  <  0 (failed attempts):       3,435  (0.1%)
+  == 0 (did not attempt):           0  (0.0%)
+  NaN  (not recorded):        444,133  (11.3%)
+  >  0 (valid best):        3,478,319  (88.6%)
+
+Best3DeadliftKg:
+  <  0 (failed attempts):       1,346  (0.0%)
+  == 0 (did not attempt):           0  (0.0%)
+  NaN  (not recorded):        982,765  (25.0%)
+  >  0 (valid best):        2,941,776  (74.9%)
+
+========================================================================
+  Block 10: Age — descriptive stats + out-of-range counts
+========================================================================
+count    2.474793e+06
+mean     3.063915e+01
+std      1.330883e+01
+min      0.000000e+00
+25%      2.050000e+01
+50%      2.700000e+01
+75%      3.800000e+01
+max      1.055000e+02
+Name: Age, dtype: float64
+
+Age <  14:   34,607
+Age >  80:   2,556
+Age == NaN:  1,451,094
+
+========================================================================
+  Block 11: BodyweightKg — descriptive stats + sanity
+========================================================================
+count    3.881628e+06
+mean     8.374745e+01
+std      2.271168e+01
+min      1.500000e+01
+25%      6.680000e+01
+50%      8.160000e+01
+75%      9.830000e+01
+max      3.000000e+02
+Name: BodyweightKg, dtype: float64
+
+BodyweightKg == 0:  0
+BodyweightKg <  0:  0
+BodyweightKg NaN:   44,259
+
+========================================================================
+  Block 12: Unique lifters
+========================================================================
+Unique lifters (total):  989,691
+Total rows (meet-perfs): 3,925,887
+Rows per lifter (mean):  4.0
+
+Unique lifters by Sex:
+Sex
+F     270413
+M     721263
+Mx        87
+Name: Name, dtype: int64
+
+========================================================================
+  Block 13: Phase-A summary — write your notes in the script comments
+========================================================================
+Finished blocks 1–12. Scroll up through the output, then fill in
+your notes in the comment block at the bottom of this script.

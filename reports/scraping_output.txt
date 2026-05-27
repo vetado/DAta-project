@@ -1,0 +1,83 @@
+
+========================================================================
+  Block 0: Ethics & robots.txt compliance check
+========================================================================
+User-Agent:  WhenDoPowerliftersPeak/1.0 (university data-projects course; contact: dmolon@albertschool.com)
+Target URL:  https://en.wikipedia.org/wiki/Powerlifting_at_the_World_Games
+robots.txt:  https://en.wikipedia.org/robots.txt
+urllib.robotparser says allowed?  False
+manual check on disallow prefixes?  True
+Final decision: PROCEED (based on manual check; robotparser is unreliable on this file)
+
+========================================================================
+  Block 1: Imports & paths
+========================================================================
+requests:       2.34.2
+beautifulsoup4: 4.x
+pandas:         3.0.3
+Raw dir:       data/raw
+Processed dir: data/processed
+
+========================================================================
+  Block 2: Fetch the page HTML
+========================================================================
+Using cached HTML at data/raw/wiki_powerlifting.html
+
+========================================================================
+  Block 3: Parse with BeautifulSoup
+========================================================================
+Found 17 wikitable(s) on the page.
+  [0] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [1] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [2] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [3] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [4] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [5] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [6] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [7] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [8] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [9] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [10] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [11] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [12] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [13] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [14] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [15] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+  [16] caption= -   first-headers=['Games', 'Gold', 'Silver', 'Bronze']
+
+========================================================================
+  Block 4: Extract wikitables into DataFrames
+========================================================================
+  table 0: 10 rows x 4 cols  caption=-
+  table 1: 10 rows x 4 cols  caption=-
+  table 2: 10 rows x 4 cols  caption=-
+  table 3: 4 rows x 4 cols  caption=-
+  table 13: 9 rows x 4 cols  caption=-
+  table 14: 9 rows x 4 cols  caption=-
+  table 15: 9 rows x 4 cols  caption=-
+  table 16: 4 rows x 4 cols  caption=-
+
+========================================================================
+  Block 5: Save scraped tables
+========================================================================
+  wrote data/raw/wiki_powerlifting_table_00_table.csv: (10, 4)
+  wrote data/raw/wiki_powerlifting_table_01_table.csv: (10, 4)
+  wrote data/raw/wiki_powerlifting_table_02_table.csv: (10, 4)
+  wrote data/raw/wiki_powerlifting_table_03_table.csv: (4, 4)
+  wrote data/raw/wiki_powerlifting_table_13_table.csv: (9, 4)
+  wrote data/raw/wiki_powerlifting_table_14_table.csv: (9, 4)
+  wrote data/raw/wiki_powerlifting_table_15_table.csv: (9, 4)
+  wrote data/raw/wiki_powerlifting_table_16_table.csv: (4, 4)
+
+Wrote combined long-format table to data/processed/wiki_powerlifting_tables_long.csv: 260 rows
+
+========================================================================
+  Block 6: Run summary
+========================================================================
+Target URL:               https://en.wikipedia.org/wiki/Powerlifting_at_the_World_Games
+robots.txt allowed UA:    YES
+Wikitables on page:       17
+Usable tables extracted:  8
+Raw HTML cached at:       data/raw/wiki_powerlifting.html
+Per-table CSVs in:        data/raw/wiki_powerlifting_table_*.csv
+Combined long-format CSV: data/processed/wiki_powerlifting_tables_long.csv
